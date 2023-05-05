@@ -1,15 +1,16 @@
 ﻿enum ICONS
 {
-	CHECKED = (char)251,
-	UNCHECKED = (char)233,
-	INDETERMINATE = (char)254
+	CHECKED = (char)84,
+	UNCHECKED = (char)70,
+	INDETERMINATE = (char)73
 }
 
 class Checkbox
 {
-    public bool? IsChecked { get; set; }
 	public bool IsEnable { get; set; }
-	public bool IsIndeterminate { get; set; }
+	public bool? IsChecked { get; private set; }
+
+	public bool IsIndeterminate { get; private set; }
 	public string Title { get; set; }
 
 	public Checkbox()
@@ -27,26 +28,48 @@ class Checkbox
 
 	public void Checked(bool? isChecked)
 	{
-		if(IsEnable)
+		if (IsEnable)
 		{
-			if(IsIndeterminate)
+			if (IsIndeterminate)
 				IsChecked = null;
 			else
 				IsChecked = isChecked;
 
-			Print(isChecked);
+			Console.WriteLine(Print());
 		}
 	}
 
-	private void Print(bool? isChecked) 
+	public string Print()
 	{
-		if(isChecked == true)
-			Console.WriteLine(ICONS.CHECKED + " : " + Title);
+		if (IsChecked == true)
+			return ((char)ICONS.CHECKED) + " : " + Title;
 
-        if (isChecked == false)
-            Console.WriteLine(ICONS.UNCHECKED + " : " + Title);
+		if (IsChecked == false)
+            return ((char)ICONS.UNCHECKED) + " : " + Title;
 
-        if (isChecked == null)
-            Console.WriteLine(ICONS.INDETERMINATE + " : " + Title);
+		if (IsChecked == null)
+            return ((char)ICONS.INDETERMINATE) + " : " + Title;
+
+		return string.Empty;
+	}
+
+    public override string ToString()
+    {
+		return Print();
+    }
+
+    public static implicit operator Checkbox(bool value) => new Checkbox() { IsChecked = value };
+}
+
+public class Program
+{
+    public static void Main()
+    {
+		Checkbox checkbox = false;
+		checkbox.Title = "dsfsd";
+
+		checkbox.Checked(false);
+
+		Console.WriteLine(checkbox.ToString());
     }
 }

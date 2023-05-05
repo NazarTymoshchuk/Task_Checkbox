@@ -14,14 +14,14 @@ class Checkbox : INotifyPropertyChanged
 	public bool IsEnable { get; set; }
 	public bool? IsChecked { get; private set; }
 
-	public bool IsIndeterminate { get; private set; }
+	public bool CanBeIndeterminate { get; private set; }
 	public string Title { get; set; }
 
 	public Checkbox()
 	{
 		IsChecked = false;
 		IsEnable = true;
-		IsIndeterminate = false;
+		CanBeIndeterminate = false;
 		Title = string.Empty;
 	}
 
@@ -35,7 +35,7 @@ class Checkbox : INotifyPropertyChanged
 	{
 		if (IsEnable)
 		{
-			if (IsIndeterminate)
+			if (CanBeIndeterminate)
 				IsChecked = null;
 			else
 				IsChecked = isChecked;

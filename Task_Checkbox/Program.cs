@@ -1,12 +1,16 @@
-﻿enum ICONS
+﻿using System.ComponentModel;
+
+enum ICONS
 {
 	CHECKED = (char)84,
 	UNCHECKED = (char)70,
 	INDETERMINATE = (char)73
 }
 
-class Checkbox
+class Checkbox : INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler? PropertyChanged;
+
 	public bool IsEnable { get; set; }
 	public bool? IsChecked { get; private set; }
 
@@ -26,7 +30,8 @@ class Checkbox
 		Title = title;
 	}
 
-	public void Checked(bool? isChecked)
+
+    public void Checked(bool? isChecked)
 	{
 		if (IsEnable)
 		{

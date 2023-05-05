@@ -60,16 +60,3 @@ class Checkbox
 
     public static implicit operator Checkbox(bool value) => new Checkbox() { IsChecked = value };
 }
-
-public class Program
-{
-    public static void Main()
-    {
-		Checkbox checkbox = false;
-		checkbox.Title = "dsfsd";
-
-		checkbox.Checked(false);
-
-		Console.WriteLine(checkbox.ToString());
-    }
-}

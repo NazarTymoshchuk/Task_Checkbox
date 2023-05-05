@@ -1,6 +1,6 @@
 ﻿class Checkbox
 {
-    public bool IsChecked { get; set; }
+    public bool? IsChecked { get; set; }
 	public bool IsEnable { get; set; }
 	public bool IsIndeterminate { get; set; }
 	public string Title { get; set; }
@@ -18,5 +18,18 @@
 		Title = title;
 	}
 
+	public void Checked(bool? isChecked)
+	{
+		if(IsEnable)
+		{
+			if(IsIndeterminate)
+			{
+				IsChecked = null;
+				return;
+			}
+
+			IsChecked = isChecked;
+		}
+	}
 
 }

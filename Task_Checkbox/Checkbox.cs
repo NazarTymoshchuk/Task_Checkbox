@@ -1,13 +1,52 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+enum ICONS
+{
+    CHECKED = (char)84,
+    UNCHECKED = (char)70,
+    INDETERMINATE = (char)73
+}
 
 class Checkbox : INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-	public bool IsEnable { get; set; }
 	public bool? IsChecked { get; private set; }
-	public bool CanBeIndeterminate { get; set; }
-	public string Title { get; set; }
+
+	private bool isEnable;
+	private bool canBeIndeterminate;
+	private string title;
+
+	public bool IsEnable
+    {
+		get { return isEnable; }
+		set 
+		{ 
+			isEnable = value;
+			OnPropertyChanged("IsEnable");
+		}
+	}
+
+    public bool CanBeIndeterminate
+    {
+        get { return canBeIndeterminate; }
+        set
+        {
+            canBeIndeterminate = value;
+            OnPropertyChanged("CanBeIndeterminate");
+        }
+    }
+
+
+	public string Title
+	{
+		get { return title; }
+		set 
+		{ 
+			title = value;
+			OnPropertyChanged("Title");
+		}
+	}
+
 
 	public Checkbox()
 	{
@@ -22,6 +61,13 @@ class Checkbox : INotifyPropertyChanged
 		Title = title;
 	}
 
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    {
+        if (PropertyChanged != null)
+            PropertyChanged(this, new PropertyChangedEventArgs(prop));
+    }
+
     public void Click()
 	{
 		if (IsEnable)
@@ -32,8 +78,13 @@ class Checkbox : INotifyPropertyChanged
 			else if (IsChecked == false && CanBeIndeterminate)
 				IsChecked = null;
 
+			else if (IsChecked == null)
+				IsChecked = true;
+
 			else if (IsChecked == false)
 				IsChecked = true;
+
+			OnPropertyChanged("IsChecked");
 		}
 	}
 
